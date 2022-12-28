@@ -1,0 +1,14 @@
+.project {
+    position: relative;
+    height: 608px;
+    overflow: hidden;
+}
+
+.project_title {
+    margin: 110px 70px 0 70px;
+    padding-bottom: 23px;
+    font-size: 22px;
+    line-height: 100%;
+    color: #000;
+    border-bottom: 1px solid #000;
+}

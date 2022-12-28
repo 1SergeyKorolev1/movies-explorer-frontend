@@ -1,0 +1,47 @@
+.promo {
+    position: relative;
+    height: 574px;
+    overflow: hidden;
+    margin-left: 9px;
+    background-color: #465DFF;
+}
+
+.promo_title {
+    padding: 75px 0 36px 70px;
+    margin: 0;
+    max-width: 640px;
+    font-size: 50px;
+    line-height: 96%;
+    color: #FFFFFF;
+}
+
+.promo_subtitle {
+    margin-left: 70px;
+    margin-bottom: 146px;
+    max-width: 310px;
+    font-size: 13px;
+    line-height: 100%;
+    color: #FFFFFF;
+}
+
+.promo_link {
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid #FFFFFF;
+    border-radius: 3px;
+    margin-left: 70px;
+    font-size: 12px;
+    line-height: 110%;
+    color: #FFFFFF;
+    transition: all 1s ease;
+}
+
+.promo_link:hover {
+    opacity: 60%;
+}
+    
+.promo_logo {
+    position: absolute;
+    top: 75px;
+    right: 70px;
+}

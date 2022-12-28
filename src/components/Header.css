@@ -1,0 +1,27 @@
+.header {
+    max-width: 1280px; 
+    margin: auto;
+    border: 1px solid red;
+    background-color: #FFFFFF;
+    transition: all 1s ease;  
+  } 
+  
+  @media screen and (max-width: 900px) {   
+    .header {  
+      margin: 0 27px 0; 
+      padding-top: 28px;   
+      padding-bottom: 30px;  
+    }   
+  } 
+
+  .header__container {
+    position: relative;
+    background-color: #465DFF;
+    margin-left: 9px;
+  }
+
+  .header__logo {
+    max-width: 38px;
+    margin: 18px 0 18px 70px;
+    transition: all 1s ease;  
+  }

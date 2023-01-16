@@ -1,19 +1,27 @@
 import React from "react"; 
 import "./Header.css"
-import logoKingMovie from "../images/logo_King_Movie.svg"; 
+import HeaderWhite from "./header/HeaderWhite.js";
+import HeaderBlue from "./header/HeaderBlue.js";
+import { Route, Routes, useHistory, Switch, Link } from 'react-router-dom';
+
  
 function Header() { 
-  return ( 
-    <header className="header"> 
-    <div className="header__container">
-      <img 
-        src={logoKingMovie} 
-        className="header__logo" 
-        alt="лого-King-Movie" 
-        title="лого-King-Movie" 
-      /> 
-    </div>
-    </header> 
+
+  return (
+      <Switch>
+        <Route path="/movies">
+          <HeaderWhite />
+        </Route>
+        <Route path="/saved-movies">
+          <HeaderWhite />
+        </Route>
+        <Route path="/profile">
+          <HeaderWhite />
+        </Route>
+        <Route path="/">
+          <HeaderBlue />
+        </Route>
+      </Switch>
   ); 
 } 
  

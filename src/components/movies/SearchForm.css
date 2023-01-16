@@ -1,0 +1,122 @@
+.search {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    border-bottom: 1px solid #E8E8E8;
+    max-width: 1280px;
+    max-height: 247px;
+    margin: 0 70px; 
+    /* border: 1px solid red; */
+    transition: all 1s ease;
+}
+
+.search__wrapper {
+    margin: 60px 0 42px;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1140px;
+    height: 46px;
+    display: flex;
+    background-color: #F9F9F9;
+    border-radius: 40px;
+    transition: all 1s ease;
+}
+
+.search__text {
+    width: 900px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    border: none;
+    background-color: #F9F9F9;
+    color: #000;
+    white-space: nowrap;
+    margin: 0 0 0 23px;
+    padding: 0;
+    outline: none;
+  }
+
+  .search__link {
+    margin: 0 6px;
+    text-align: center;
+    font-size: 11px;
+    color: #FFF;
+    border: none;
+    border-radius: 48px;
+    width: 60px;
+    height: 35px;
+    background-color: #FF6838;
+    cursor: pointer;
+    transition: all 1s ease;
+  }
+
+  .search__link:hover {
+    background-color: #69a1dd;
+  }
+
+  .checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    margin: 0 auto 70px;
+  }
+
+  .invisible-checkbox {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(0 0 0 0);
+  }
+
+  .visible-checkbox {
+    display: flex;
+    align-items: center;
+    width: 36px;
+    height: 20px;
+    background-color: #EBEBEB;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 1s ease;
+  }
+
+  .visible-checkbox__radio {
+    display: block;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    background-color: #F5F5F5;
+    transition: all 1s ease;
+    margin: 0 2px;
+    cursor: pointer;
+    transition: all 1s ease;
+  }
+
+  .checkbox__text {
+    font-size: 14px;
+    line-height: 106%;
+    margin: 0 0 0 12px;
+  }
+
+  .invisible-checkbox:checked + .visible-checkbox {
+    justify-content: end;
+  }
+
+  .invisible-checkbox:checked + .visible-checkbox .visible-checkbox__radio {
+    background-color: #2BE080;
+  }
+
+  @media screen and (max-width: 768px) {
+    .search { 
+      margin: 0 30px;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    .search { 
+      margin: 0 14px;
+    }
+  }
+
+  

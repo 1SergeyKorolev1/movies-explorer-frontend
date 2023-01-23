@@ -41,7 +41,7 @@ function SearchForm({ onMovieSearchr }) {
             <span class="visible-checkbox">
                 <span className="visible-checkbox__radio"></span>
             </span>
-            <span className="checkbox__text">Короткометражки</span>
+            <span className="checkbox-wrapper__text">Короткометражки</span>
         </label>       
       </form>
   );

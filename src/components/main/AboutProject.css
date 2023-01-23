@@ -60,7 +60,7 @@
     text-align: center;
 }
 
-.project-graph__progress_backend {
+.project-graph__progress-backend {
     margin: 0 0 23px;
     padding: 9px 0;
     font-size: 14px;
@@ -70,7 +70,7 @@
     transition: all 1s ease;
 }
 
-.project-graph__progress_frontend {
+.project-graph__progress-frontend {
     margin: 0 0 23px;
     padding: 9px 0;
     font-size: 14px;
@@ -131,11 +131,11 @@
         margin-top: 16px;
     }
 
-    .project-graph__progress_backend {
+    .project-graph__progress-backend {
         font-size: 11px;
     }
 
-    .project-graph__progress_frontend {
+    .project-graph__progress-frontend {
         font-size: 11px;
     }
 

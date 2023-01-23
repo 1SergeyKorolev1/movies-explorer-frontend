@@ -1,5 +1,6 @@
 .profile {
     max-width: 1280px;
+    height: calc(100vh - 74px);
     display: flex;
     margin: auto;
     background-color: #FFF;
@@ -8,7 +9,7 @@
 .profile__wrapper {
     width: 410px;
     display: flex;
-    margin: auto;
+    margin: 0 auto;
     flex-direction: column;
     transition: all 1s ease;
 }

@@ -38,17 +38,17 @@ function App() {
           </Route>
           <Route path="/movies">
             <Header />
-            <Movies />
+            <Main />
             <Footer />
           </Route>
           <Route path="/saved-movies">
             <Header />
-            <SavedMovies />
+            <Main />
             <Footer />
           </Route>
           <Route path="/profile">
             <Header />
-            <Profile onDataChangeUser={handleDataChangeUser} />
+            <Main handleDataChangeUser={handleDataChangeUser} />
           </Route>
           <Route path="/signup">
             <Register onAddUser={handleAddUser} />

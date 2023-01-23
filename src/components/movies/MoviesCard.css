@@ -44,7 +44,7 @@
 .element__save {
     width: 100px;
     height: 29px;
-    margin: auto;
+    margin: 18px auto;
     border: none;
     border-radius: 30px;
     background-color: #F9F9F9;
@@ -57,7 +57,7 @@
 .element__saved {
     width: 100px;
     height: 29px;
-    margin: auto;
+    margin: 18px auto;
     border: none;
     border-radius: 30px;
     background-color: #EE3465;
@@ -73,7 +73,7 @@
 .element__delete {
     width: 100px;
     height: 29px;
-    margin: auto;
+    margin: 18px auto;
     border: none;
     border-radius: 30px;
     background-color: #F9F9F9;
@@ -102,15 +102,34 @@
     .element {
       min-width: 342px;
     }
+
+    .element__img {
+        height: 190px;
+        min-height: 190px;
+    }
   }
 
 @media screen and (max-width: 743px) {
     .element {
       min-width: 300px;
     }
+  }
+
+  @media screen and (max-width: 456px) {
+    .element__saved {
+        margin: 14px auto;
+    }
+
+    .element__save {
+        margin: 14px auto;
+    }
+
+    .element__delete {
+        margin: 14px auto;
+    }
 
     .element__img {
-      height: 170px;
-      min-height: 170px;
+        height: 168px;
+        min-height: 168px;
     }
   }

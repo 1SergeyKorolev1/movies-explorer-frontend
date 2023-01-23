@@ -15,13 +15,13 @@ function App() {
 
   const history = useHistory();
 
-  function handleAddUser(data) {
-    console.log(data);
-  }
-
   function handleAuthorizedUser(data) {
     console.log(data);
     history.push("/movies");
+  }
+
+  function handleAddUser(data) {
+    console.log(data);
   }
 
   function handleDataChangeUser(data) {

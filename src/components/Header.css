@@ -15,7 +15,7 @@
 
   .header__logo {
     max-width: 38px;
-    margin: 18px 0 18px 70px;
+    margin: 18px 44px 18px 70px;
     transition: all 1s ease;  
     cursor: pointer;
   }
@@ -33,20 +33,7 @@
   }
 
   .header__link-films {
-    font-family: "Inter";
-    font-size: 13px;
-    line-height: 114%;
-    color: #000;
-    text-decoration: none;
-    margin: 0 16px 0 44px;
-    transition: all 1s ease;
-  }
-
-  .header__link-films:hover {
-    opacity: 0.6;
-  }
-
-  .header__link-films_save {
+    margin: 0 16px 0 0;
     font-family: "Inter-Regular";
     font-size: 13px;
     line-height: 114%;
@@ -55,7 +42,7 @@
     transition: all 1s ease;
   }
 
-  .header__link-films_save:hover {
+  .header__link-films:hover {
     opacity: 0.6;
   }
 
@@ -85,6 +72,12 @@
   .header__link-profile:hover {
     opacity: 0.6;
   }
+
+  @media screen and (max-width: 1054px) { 
+    .header__container{
+      margin: 0;
+    }
+  } 
 
   @media screen and (max-width: 768px) {   
     .header__logo {

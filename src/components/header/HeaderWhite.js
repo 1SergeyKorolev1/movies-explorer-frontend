@@ -11,6 +11,7 @@ function HeaderWhite() {
 
   const location = useLocation();
   const history = useHistory();
+  const root = document.getElementById('root');
   
   const [windowSize, setWindowSize] = React.useState({
     width: undefined,
@@ -25,6 +26,21 @@ function HeaderWhite() {
   const goHome = () => {
     history.push("/");
   }
+  
+  function disableScrolling() {
+    console.log(menuClick);
+    if (menuClick) {
+      console.log('я работаю');
+      // console.log(root);
+      root.classList.add('no-scroll');
+    } else {
+      root.classList.remove('no-scroll');
+    }
+  }
+
+  React.useEffect(() => {
+    disableScrolling();
+  },[menuClick]);
 
   React.useEffect(() => {
 
@@ -51,7 +67,8 @@ function HeaderWhite() {
 
   function handleMenuClick() {
     setMenuClick(!menuClick);
-    console.log(menuClick);
+    root.classList.remove('no-scroll');
+    // console.log(menuClick);
   }
 
   return ( 
@@ -101,13 +118,25 @@ function HeaderWhite() {
             <nav className="header__wrapper-link">
               {!menuOpened && (
                 <>
-                  <Link to="/movies" className="header__link-films">Фильмы</Link>
-                  <Link to="/saved-movies" className="header__link-films_save">Сохраненные Фильмы</Link>
+                  <Link to="/movies" className={`header__link-films ${
+                    location.pathname === '/movies'
+                    ? 'active-linke'
+                    : ''
+                }`}>Фильмы</Link>
+                  <Link to="/saved-movies" className={`header__link-films ${
+                    location.pathname === '/saved-movies'
+                    ? 'active-linke'
+                    : ''
+                }`}>Сохраненные Фильмы</Link>
                 </>
               )}
             </nav>
             {!menuOpened ? (
-              <Link to="/profile" className="header__link-profile">Аккаунт</Link>
+              <Link to="/profile" className={`header__link-profile ${
+                location.pathname === '/profile'
+                ? 'active-linke'
+                : ''
+            }`}>Аккаунт</Link>
             ) : (
               <img
                 onClick={handleMenuClick}

@@ -1,19 +1,36 @@
 import React from "react";
-import "./Main.css"
-import Promo from "./main/Promo.js"
-import AboutProject from "./main/AboutProject.js"
-import Techs from "./main/Techs.js"
-import AboutMe from "./main/AboutMe.js"
-import Portfoli from "./main/Portfolio.js"
+import { Route, Switch, useHistory } from 'react-router-dom';
+import "./Main.css";
+import Promo from "./main/Promo.js";
+import AboutProject from "./main/AboutProject.js";
+import Techs from "./main/Techs.js";
+import AboutMe from "./main/AboutMe.js";
+import Portfoli from "./main/Portfolio.js";
+import Movies from './Movies.js';
+import SavedMovies from "./SavedMovies.js";
+import Profile from './Profile.js';
  
-function Main() {
+function Main({ handleDataChangeUser }) {
   return (
     <main className="content">
-      <Promo />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
-      <Portfoli />
+      <Switch>
+          <Route exact path="/">
+            <Promo />
+            <AboutProject />
+            <Techs />
+            <AboutMe />
+            <Portfoli />
+          </Route>
+          <Route path="/movies">
+            <Movies />
+          </Route>
+          <Route path="/saved-movies">
+            <SavedMovies />
+          </Route>
+          <Route path="/profile">
+            <Profile onDataChangeUser={handleDataChangeUser} />
+          </Route>
+      </Switch>
     </main>
   ); 
 }

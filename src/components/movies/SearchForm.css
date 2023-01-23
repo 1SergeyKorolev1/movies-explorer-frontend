@@ -24,6 +24,7 @@
 
 .search__text {
     width: 900px;
+    height: 40px;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -32,9 +33,9 @@
     background-color: #F9F9F9;
     color: #000;
     white-space: nowrap;
-    margin: 0 0 0 23px;
-    padding: 0;
-    outline: none;
+    padding: 0 0 0 23px;
+    outline-color: #69a1dd34;
+    border-radius: 40px;
   }
 
   .search__link {
@@ -46,6 +47,7 @@
     border-radius: 48px;
     width: 60px;
     height: 35px;
+    min-height: 35px;
     background-color: #FF6838;
     cursor: pointer;
     transition: all 1s ease;
@@ -93,7 +95,7 @@
     transition: all 1s ease;
   }
 
-  .checkbox__text {
+  .checkbox-wrapper__text {
     font-size: 14px;
     line-height: 106%;
     margin: 0 0 0 12px;
@@ -111,11 +113,23 @@
     .search { 
       margin: 0 30px;
     }
+
+    .search__link {
+      width: 58px;
+    }
+
+    .search__text {
+      width: 500px;
+    }
   }
 
   @media screen and (max-width: 400px) {
     .search { 
       margin: 0 14px;
+    }
+
+    .search__text {
+      width: 180px;
     }
   }
 

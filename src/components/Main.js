@@ -10,7 +10,7 @@ import Movies from './Movies.js';
 import SavedMovies from "./SavedMovies.js";
 import Profile from './Profile.js';
  
-function Main({ handleDataChangeUser }) {
+function Main({ handleDataChangeUser, onMovieSearch, cardsData, searchData }) {
   return (
     <main className="content">
       <Switch>
@@ -22,7 +22,11 @@ function Main({ handleDataChangeUser }) {
             <Portfoli />
           </Route>
           <Route path="/movies">
-            <Movies />
+            <Movies 
+            onMovieSearch={onMovieSearch}
+            cardsData={cardsData}
+            searchData={searchData}
+            />
           </Route>
           <Route path="/saved-movies">
             <SavedMovies />

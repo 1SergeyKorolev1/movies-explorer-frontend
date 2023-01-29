@@ -1,11 +1,13 @@
 import React from "react";
 import "./More.css"
 
-function More() {
+function More({ handleMoreClick, searchData }) {
 
-  return (
-        <p className="more-title">Еще</p>
-  );
+  if(searchData) {
+    return (
+          <p className="more-title" onClick={handleMoreClick} >Еще</p>
+    );
+  }
 }
 
 export default More;

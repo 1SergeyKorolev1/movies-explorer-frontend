@@ -28,9 +28,9 @@ function HeaderWhite() {
   }
   
   function disableScrolling() {
-    console.log(menuClick);
+    // console.log(menuClick);
     if (menuClick) {
-      console.log('я работаю');
+      // console.log('я работаю');
       // console.log(root);
       root.classList.add('no-scroll');
     } else {

@@ -1,3 +1,5 @@
+import { moviesApi } from "../utils/MoviesApi.js";
+
 import React from 'react';
 import './App.css';
 import { Route, Switch, useHistory } from 'react-router-dom';
@@ -12,6 +14,11 @@ import Footer from './Footer.js';
 import NotFound from './NotFound.js';
 
 function App() {
+
+  const [currentCards, setCurrentCards] = React.useState([]);
+  const [currentSearch, setCurrentSearch] = React.useState("");
+
+  // console.log(currentSearch);
 
   const history = useHistory();
 
@@ -28,6 +35,20 @@ function App() {
     console.log(data);
   }
 
+  function handleMovieSearchr(dataMovies) {
+    // console.log(currentSearch);
+    moviesApi
+    .initialCardsData()
+    .then((data) => {
+      // console.log(data);
+      setCurrentCards(data);
+      setCurrentSearch(dataMovies.name);
+      })
+      .catch((err) => {
+        console.log(`Ошибка ${err} повторите запросс позже`);
+      });
+ }
+
   return (
     <>
       <Switch>
@@ -38,7 +59,11 @@ function App() {
           </Route>
           <Route path="/movies">
             <Header />
-            <Main />
+            <Main 
+            onMovieSearch={handleMovieSearchr}
+            cardsData={currentCards}
+            searchData={currentSearch}
+            />
             <Footer />
           </Route>
           <Route path="/saved-movies">

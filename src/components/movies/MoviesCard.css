@@ -7,6 +7,14 @@
     transition: all 1s ease;
 }
 
+.element:nth-child(n + 7) {
+    display: none;
+}
+
+.element.visible {
+    display: flex;
+}
+
 .element__group {
     display: flex;
     justify-content: space-between;
@@ -39,6 +47,7 @@
     object-fit: contain;
     background-color: #eeeeee;
     width: 100%;
+    cursor: pointer;
 }
 
 .element__save {

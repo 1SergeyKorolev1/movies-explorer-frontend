@@ -17,8 +17,8 @@ function Login({ onAuthorizedUser }) {
     // console.log(evt.target.value);
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
 
     onAuthorizedUser({
       email: email,
@@ -45,16 +45,20 @@ function Login({ onAuthorizedUser }) {
             value={email}
             onChange={onChangeEmail}
             />
+            <span className="popup__error" id="email-authorized-error"></span>
             <label htmlFor="password" className="login__label">Пароль</label>
             <input
             className="login__input"
             id="password-authorized"
+            minLength="2"
+            maxLength="40"
             required
             name="login-password"
             type="password"
             value={password}
             onChange={onChangePassword}
             />
+            <span className="popup__error" id="password-authorized-error"></span>
             <button type="submit" className="login__button">
             Войти
             </button>

@@ -1,36 +1,76 @@
 import React from "react";
+import { useLocation } from 'react-router-dom';
 import "./MoviesCard.css"
-import MovieCardImage from "../../images/MovieCard-1.jpg"
-import MovieCardSaved from "../../images/MovieCardSaved.svg"
 
-function MoviesCard({ onCheck, card }) {
+function MoviesCard({ onCheck, card, onCardSave, chekButtonClass, onCardDelete }) {
+  
+  const location = useLocation();
+
+  function handleSaveClick(evt) {
+    onCardSave(card, evt);
+  }
+
+  function handleDeleteClick(evt) {
+    onCardDelete(card, evt);
+  }
 
   function handleImageClick() {
     window.open(card.trailerLink, '_blank');
   }
 
-  function random() {
-    return Math.random();
-  }
-  
-  const buttonType = `${random() > 0.5 ? "element__save" : "element__saved"}`;
-  const buttonContent = `${buttonType === "element__saved" || onCheck === true ? "" : "сохранить"}`;
+  const buttonContent = `${chekButtonClass || onCheck === true ? "" : "сохранить"}`;
 
-  return (
-    <li className="element">  
-      <div className="element__group">
-        <h2 className="element__title">{card.nameRU}</h2>
-        <p className="element__time">{card.duration} мин.</p>
-      </div>  
-      <img
-        className="element__img"
-        src={`https://api.nomoreparties.co${card.image.url}`}
-        alt="???"
-        onClick={handleImageClick}
-      />
-      <button type="button" className={`${onCheck ? "element__delete" : buttonType}`}>{buttonContent}</button>
-    </li>
-  );
+  if (location.pathname === '/movies') {
+    if(chekButtonClass) {
+      return (
+        <li className="element">  
+          <div className="element__group">
+            <h2 className="element__title">{card.nameRU}</h2>
+            <p className="element__time">{card.duration} мин.</p>
+          </div>  
+          <img
+            className="element__img"
+            src={`https://api.nomoreparties.co${card.image.formats.thumbnail.url}`}
+            alt={`превью картинка для фильма ${card.nameRU}`}
+            onClick={handleImageClick}
+          />
+          <button type="button" className="element__saved" onClick={handleDeleteClick}>{buttonContent}</button>
+        </li>
+      );
+    } else {
+      return (
+        <li className="element">  
+          <div className="element__group">
+            <h2 className="element__title">{card.nameRU}</h2>
+            <p className="element__time">{card.duration} мин.</p>
+          </div>  
+          <img
+            className="element__img"
+            src={`https://api.nomoreparties.co${card.image.formats.thumbnail.url}`}
+            alt={`превью картинка для фильма ${card.nameRU}`}
+            onClick={handleImageClick}
+          />
+          <button type="button" className="element__save" onClick={handleSaveClick}>{buttonContent}</button>
+        </li>
+      );
+    }
+  } else if (location.pathname === '/saved-movies') {
+    return (
+      <li className="element">  
+        <div className="element__group">
+          <h2 className="element__title">{card.nameRU}</h2>
+          <p className="element__time">{card.duration} мин.</p>
+        </div>  
+        <img
+          className="element__img"
+          src={card.thumbnail}
+          alt={`превью картинка для фильма ${card.nameRU}`}
+          onClick={handleImageClick}
+        />
+        <button type="button" className="element__delete" onClick={handleDeleteClick}>{buttonContent}</button>
+      </li>
+    );
+  }
 }
 
 export default MoviesCard;

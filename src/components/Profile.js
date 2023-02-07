@@ -1,11 +1,13 @@
 import React from "react";
 import "./Profile.css"
 import { useHistory } from "react-router-dom";
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 function Profile({ onDataChangeUser }) {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
 
+  const currentUser = React.useContext(CurrentUserContext);
   const history = useHistory();
   
   const goBack = () => {
@@ -14,16 +16,18 @@ function Profile({ onDataChangeUser }) {
 
   function onChangeName(evt) {
     setName(evt.target.value);
-    // console.log(evt.target.value);
+    validateForm();
+    validateInput(evt.target);
   }
 
   function onChangeEmail(evt) {
     setEmail(evt.target.value);
-    // console.log(evt.target.value);
+    validateForm();
+    validateInput(evt.target);
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  function handleSubmit(evt) {
+    evt.preventDefault();
 
     onDataChangeUser({
       email: email,
@@ -31,11 +35,36 @@ function Profile({ onDataChangeUser }) {
     });
   };
 
+  function validateForm() {
+    const form = document.querySelector(".profile__form");
+    const submitButton = form.querySelector(".profile__button");
+
+    if(form.checkValidity()) {
+      submitButton.removeAttribute("disabled");
+      submitButton.classList.add("profile__button_valid");
+      submitButton.classList.remove("profile__button_invalid")
+    } else {
+      submitButton.setAttribute("disabled", true);
+      submitButton.classList.remove("profile__button_valid");
+      submitButton.classList.add("profile__button_invalid");
+    }
+  }
+
+  function validateInput(input) {
+    const errorElement = document.querySelector(`#${input.id}-error`);
+    errorElement.textContent = input.validationMessage;
+  }
+
+  window.onload = function() {
+    validateForm()
+  };
+
   return (
     <section className="profile">
       <div className="profile__wrapper">
-        <p className="profile__welcome">{`Привет, ${name ? name : "Серго"}!`}</p>
-        <form onSubmit={handleSubmit} className="profile__form">
+        <p className="profile__welcome">{`Привет, ${currentUser.name}!`}</p>
+        <form onSubmit={handleSubmit} className="profile__form" noValidate>
+                <span className="profile__error" id="name-profile-error"></span>
             <div className="profile__input-wrapper">
                 <label htmlFor="text" className="profile__label">Имя</label>
                 <input
@@ -44,7 +73,9 @@ function Profile({ onDataChangeUser }) {
                 required
                 name="profile-name"
                 type="text"
-                value={name ? name : "Серго"}
+                minLength="2"
+                maxLength="22"
+                value={name === "" ? currentUser.name : name}
                 onChange={onChangeName}
                 />
             </div>
@@ -57,17 +88,15 @@ function Profile({ onDataChangeUser }) {
                 required
                 name="profile-email"
                 type="email"
-                value={email ? email : "Sergo@email.ru"}
+                value={email === "" ? currentUser.email : email}
                 onChange={onChangeEmail}
                 />
             </div>
+                <span className="profile__error" id="email-profile-error"></span>
             <button type="submit" className="profile__button">
                 Редактировать
             </button>
-            <button onClick={goBack} className="profile__link">Выйти из аккаунта</button>
-            {/* <Link to="/sign-in" className="login__link-register">
-            Уже зарегистрированы? Войти
-            </Link> */}
+            <button onClick={goBack} className="profile__link" disabled="true">Выйти из аккаунта</button>
         </form>
       </div>
     </section>

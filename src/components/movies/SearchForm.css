@@ -5,7 +5,8 @@
     border-bottom: 1px solid #E8E8E8;
     max-width: 1280px;
     max-height: 247px;
-    margin: 0 70px; 
+    margin: 0 70px;
+    padding: 0 0 70px; 
     /* border: 1px solid red; */
     transition: all 1s ease;
 }
@@ -57,10 +58,15 @@
     background-color: #69a1dd;
   }
 
+  .checkbox-container {
+    display: flex;
+    flex-direction: column;
+  }
+
   .checkbox-wrapper {
     display: flex;
     align-items: center;
-    margin: 0 auto 70px;
+    margin: auto;
   }
 
   .invisible-checkbox {
@@ -107,6 +113,16 @@
 
   .invisible-checkbox:checked + .visible-checkbox .visible-checkbox__radio {
     background-color: #2BE080;
+  }
+
+  .checkbox-container__error {
+    margin: 10px auto 0;
+    display: block;
+    color: #FF6838;
+  }
+
+  .checkbox-container__error-none {
+    display: none;
   }
 
   @media screen and (max-width: 768px) {

@@ -10,7 +10,22 @@ import Movies from './Movies.js';
 import SavedMovies from "./SavedMovies.js";
 import Profile from './Profile.js';
  
-function Main({ handleDataChangeUser, onMovieSearch, cardsData, searchData }) {
+function Main({ handleDataChangeUser, onMovieSearch, cardsData, searchData, onCardSave, cardsDataSave, onSaveMovieSearchr, searchSavedData, onCardDelete }) {
+  let cards = 6;
+
+  function handleMoreClick() {
+    cards += 3;
+    const arrayVisCards = Array.from(document.querySelector(".elements").children);
+    const visCards = arrayVisCards.slice(0, cards);
+    // console.log(arrayVisCards.length);
+
+    visCards.forEach(el => el.classList.add("visible"));
+
+    if(visCards.length === arrayVisCards.length || arrayVisCards.length === 0) {
+      document.querySelector(".more-title").style.display = "none";
+    }
+  }
+
   return (
     <main className="content">
       <Switch>
@@ -26,10 +41,20 @@ function Main({ handleDataChangeUser, onMovieSearch, cardsData, searchData }) {
             onMovieSearch={onMovieSearch}
             cardsData={cardsData}
             searchData={searchData}
+            onCardSave={onCardSave}
+            handleMoreClick={handleMoreClick}
+            cardsDataSave={cardsDataSave}
+            onCardDelete={onCardDelete}
             />
           </Route>
           <Route path="/saved-movies">
-            <SavedMovies />
+            <SavedMovies
+            cardsDataSave={cardsDataSave}
+            onSaveMovieSearchr={onSaveMovieSearchr}
+            searchSavedData={searchSavedData}
+            handleMoreClick={handleMoreClick}
+            onCardDelete={onCardDelete}
+            />
           </Route>
           <Route path="/profile">
             <Profile onDataChangeUser={handleDataChangeUser} />

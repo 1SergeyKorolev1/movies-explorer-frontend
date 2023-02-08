@@ -2,17 +2,18 @@ import React from "react";
 import "./Profile.css"
 import { useHistory } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
+import Error from "./error/Error.js";
 
-function Profile({ onDataChangeUser }) {
+function Profile({ onDataChangeUser, errorText, goBack }) {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
 
   const currentUser = React.useContext(CurrentUserContext);
   const history = useHistory();
   
-  const goBack = () => {
-    history.push("/signin");
-  };
+  // const goBack = () => {
+  //   history.push("/signin");
+  // };
 
   function onChangeName(evt) {
     setName(evt.target.value);
@@ -39,7 +40,8 @@ function Profile({ onDataChangeUser }) {
     const form = document.querySelector(".profile__form");
     const submitButton = form.querySelector(".profile__button");
 
-    if(form.checkValidity()) {
+    if(form.checkValidity() && name !== "" && name!== currentUser.name && email !== currentUser.email && email !== "") {
+      // console.log("nnn")
       submitButton.removeAttribute("disabled");
       submitButton.classList.add("profile__button_valid");
       submitButton.classList.remove("profile__button_invalid")
@@ -48,16 +50,18 @@ function Profile({ onDataChangeUser }) {
       submitButton.classList.remove("profile__button_valid");
       submitButton.classList.add("profile__button_invalid");
     }
-  }
 
+    
+  }
+  
   function validateInput(input) {
     const errorElement = document.querySelector(`#${input.id}-error`);
     errorElement.textContent = input.validationMessage;
   }
-
-  window.onload = function() {
+  
+  React.useEffect(() => {
     validateForm()
-  };
+  });
 
   return (
     <section className="profile">
@@ -92,11 +96,12 @@ function Profile({ onDataChangeUser }) {
                 onChange={onChangeEmail}
                 />
             </div>
-                <span className="profile__error" id="email-profile-error"></span>
+            <span className="profile__error" id="email-profile-error"></span>
+            <Error errorText={errorText} />
             <button type="submit" className="profile__button">
                 Редактировать
             </button>
-            <button onClick={goBack} className="profile__link" disabled="true">Выйти из аккаунта</button>
+            <button onClick={goBack} className="profile__link">Выйти из аккаунта</button>
         </form>
       </div>
     </section>

@@ -3,19 +3,33 @@ import { useLocation } from 'react-router-dom';
 import "./MoviesCardList.css"
 import Card from "./MoviesCard.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
+import Preloader from "../Preloader.js";
 
-function MoviesCardList({ checked, cardsData, searchData, checkboxState, onCardSave, cardsDataSave, searchSavedData, onCardDelete }) {
+function MoviesCardList({ checked, cardsData, searchData, checkboxState, onCardSave, cardsDataSave, searchSavedData, onCardDelete, checkPreloader }) {
   const location = useLocation();
   const currentUser = React.useContext(CurrentUserContext);
 
-  window.onload = function() {
-    const checkboxSearch = document.getElementById('checkbox-search');
-    if(JSON.parse(localStorage.getItem('checking')) === true) {
-      checkboxSearch.checked = true;
-    } else {
-      checkboxSearch.checked = false;
-    }
- };
+  if (location.pathname === '/movies') { 
+    window.onload = function() {
+      const checkboxSearch = document.getElementById('checkbox-search');
+      if(JSON.parse(localStorage.getItem('checking')) === true) {
+        checkboxSearch.checked = true;
+      } else {
+        checkboxSearch.checked = false;
+      }
+    };
+  }
+
+  if (location.pathname === '/saved-movies') { 
+    window.onload = function() {
+      const checkboxSearch = document.getElementById('checkbox-search');
+      if(JSON.parse(localStorage.getItem('checkingSave')) === true) {
+        checkboxSearch.checked = true;
+      } else {
+        checkboxSearch.checked = false;
+      }
+    };
+  }
 
  function replaceSaveSerchText() {
   if(searchSavedData === null) {
@@ -38,22 +52,38 @@ function MoviesCardList({ checked, cardsData, searchData, checkboxState, onCardS
  const serchDataText = replaceSerchText();
 
   if (location.pathname === '/movies' && cardsData !== null) {
-    return (
-        <ul className="elements">
-            {cardsData.map((card) => {
-              const arrayChekButtonClass = cardsDataSave.map((cardSave) => {
-                const saveButtonClassCheck = (card.nameRU === cardSave.nameRU && cardSave.owner === currentUser._id);
-                return saveButtonClassCheck;
-              });
-              const chekButtonClass = (arrayChekButtonClass.includes(true));
-              let serchText = serchDataText.toLowerCase(); 
-              let cardText = card.nameRU.toLowerCase();
-              if (cardText.includes(serchText.slice(0,2))
-               || cardText.includes(serchText)
-               || cardText.includes(serchText.slice(1,3))
-               ) {
-                if(checkboxState) {
-                  if(card.duration <= 40) {
+    if(checkPreloader) {
+      return (
+        <Preloader />
+      )
+    } else {
+      return (
+          <ul className="elements">
+              {cardsData.map((card) => {
+                const arrayChekButtonClass = cardsDataSave.map((cardSave) => {
+                  const saveButtonClassCheck = (card.nameRU === cardSave.nameRU && cardSave.owner === currentUser._id);
+                  return saveButtonClassCheck;
+                });
+                const chekButtonClass = (arrayChekButtonClass.includes(true));
+                let serchText = serchDataText.toLowerCase(); 
+                let cardText = card.nameRU.toLowerCase();
+                if (cardText.includes(serchText.slice(0,2))
+                 || cardText.includes(serchText)
+                 || cardText.includes(serchText.slice(1,3))
+                 ) {
+                  if(checkboxState) {
+                    if(card.duration <= 40) {
+                      return (
+                        <Card
+                          card={card}
+                          onCheck={checked}
+                          onCardSave={onCardSave}
+                          chekButtonClass={chekButtonClass}
+                          onCardDelete={onCardDelete}
+                        />
+                        )
+                    }
+                  } else {
                     return (
                       <Card
                         card={card}
@@ -64,22 +94,12 @@ function MoviesCardList({ checked, cardsData, searchData, checkboxState, onCardS
                       />
                       )
                   }
-                } else {
-                  return (
-                    <Card
-                      card={card}
-                      onCheck={checked}
-                      onCardSave={onCardSave}
-                      chekButtonClass={chekButtonClass}
-                      onCardDelete={onCardDelete}
-                    />
-                    )
-                }
-                }
-             }
-            )}
-        </ul>
-    );
+                  }
+               }
+              )}
+          </ul>
+      );
+    }
   } else if (location.pathname === '/saved-movies') {
     return (
       <ul className="elements">

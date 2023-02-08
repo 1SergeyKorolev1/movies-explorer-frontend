@@ -4,8 +4,7 @@ import "../Header.css"
 import logoKingMovie from "../../images/logo_King_Movie.svg";
 import headerMenu from "../../images/headerMenu.svg"
 import Cross from "../../images/Krestic.svg"
-import { Route, Routes, useHistory, Switch, Link, useLocation } from 'react-router-dom';
-
+import { useHistory, Link, useLocation } from 'react-router-dom';
  
 function HeaderWhite() { 
 
@@ -21,17 +20,12 @@ function HeaderWhite() {
   const [menuOpened, setMenuOpened] = React.useState(undefined);
   const [menuClick, setMenuClick] = React.useState(false);
 
-  // console.log(windowSize, menuOpened);
-
   const goHome = () => {
     history.push("/");
   }
   
   function disableScrolling() {
-    // console.log(menuClick);
     if (menuClick) {
-      // console.log('я работаю');
-      // console.log(root);
       root.classList.add('no-scroll');
     } else {
       root.classList.remove('no-scroll');
@@ -68,7 +62,6 @@ function HeaderWhite() {
   function handleMenuClick() {
     setMenuClick(!menuClick);
     root.classList.remove('no-scroll');
-    // console.log(menuClick);
   }
 
   return ( 

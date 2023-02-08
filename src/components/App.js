@@ -1,19 +1,16 @@
 import { moviesApi } from "../utils/MoviesApi.js";
+import { auth } from "../utils/auth.js";
 import { mainApi } from "../utils/MainApi.js";
 
 import React from 'react';
 import './App.css';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import Header from "./Header.js";
 import Main from "./Main.js";
-import Movies from './Movies.js';
-import SavedMovies from "./SavedMovies.js"
 import Register from './Register.js';
 import Login from "./Login.js"
-import Profile from './Profile.js';
 import Footer from './Footer.js';
-import NotFound from './NotFound.js';
 
 function App() {
 
@@ -28,15 +25,26 @@ function App() {
   // const [savedMoviesSearch, setSavedMoviesSearch] = React.useState("");
   const [updateTheData, setUpdateTheData] = React.useState(false);
   const [cardId, setCardId] = React.useState("");
+  const [errorText, setErrorText] = React.useState("");
+  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [checkPreloader, setCheckPreloader] = React.useState(false);
 
   const history = useHistory();
+
+  React.useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      authCheck(jwt);
+    } else {
+      setLoggedIn(false);
+    }
+  }, [loggedIn]);
 
   React.useEffect(() => {
     mainApi
       .initialDataProfile()
       .then((data) => {
         setCurrentUser(data);
-        console.log(data);
       })
       .catch((err) => {
         console.log(`Ошибка ${err} повторите запросс позже`);
@@ -48,37 +56,103 @@ function App() {
       .initialMovieData()
       .then((data) => {
         setCurrentSaveCards(data);
-        console.log(data);
       })
       .catch((err) => {
         console.log(`Ошибка ${err} повторите запросс позже`);
       });
   }, [updateTheData]);
 
+  const authCheck = (jwt) => {
+    auth
+      .checkToken(jwt)
+      .then((res) => {
+        if (res) {
+          setLoggedIn(true);
+          setCurrentUser({
+            email: res.email,
+            name: res.name,
+            _id: res._id,
+          });
+        } else {
+          setLoggedIn(false);
+          console.log("Ошибка авторизации");
+        }
+      })
+      .catch((err) => {
+        console.log(`Ошибка ${err} повторите запросс позже`);
+      });
+  };
+
   function handleAddUser(data) {
     console.log(data);
+    auth
+      .onRegister(data.name, data.email, data.password)
+      .then((res) => {
+        console.log(res);
+        if (!res) {
+          setErrorText("Что то пошло не так:(");
+        } else if(res.message) {
+          setErrorText(res.message);
+        } else {
+          res.password = data.password;
+          handleAuthorizedUser(res);
+          setCurrentUser({
+            email: res.email,
+            name: res.name,
+            _id: res._id,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(`Ошибка ${err} повторите запросс позже`);
+      });
   }
 
   function handleAuthorizedUser(data) {
     console.log(data);
-    history.push("/movies");
+    auth
+    .onAuthorize(data.password, data.email)
+    .then((data) => {
+      console.log(data);
+      if(data.token) {
+        localStorage.setItem("jwt", data.token);
+        authCheck(data.token);
+        setLoggedIn(true);
+        history.push("/movies");
+        console.log(data);
+      } else if(data.message) {
+        setErrorText(data.message)
+      } else {
+        setErrorText("У вас нет токена!");
+      }
+    }).catch((err) => {
+      setErrorText(`Ошибка ${err} повторите запросс позже`);
+    }); 
   }
 
-  function handleDataChangeUser(data) {
-    console.log(data);
+  function handleDataChangeUser(dataProfile) {
+    mainApi
+    .newNameAndEmail(dataProfile.name, dataProfile.email)
+    .then((data) => {
+      if(data.validation !== undefined) {
+        setErrorText(data.validation.body.message);
+      }
+      window.location.reload();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   function handleMovieSearchr(dataMovies) {
-    // console.log(currentSearch);
+    setCheckPreloader(true);
     moviesApi
     .initialCardsData()
     .then((data) => {
-      // console.log(data);
-      // setCurrentCards(data);
-      // setCurrentSearch(dataMovies.name);
       localStorage.setItem('search', JSON.stringify(dataMovies.name));
       localStorage.setItem('dataMovies', JSON.stringify(data));
       window.location.reload();
+      setCheckPreloader(false);
       })
       .catch((err) => {
         console.log(`Ошибка ${err} повторите запросс позже`);
@@ -175,18 +249,45 @@ function App() {
   }
  }
 
+ const goBack = () => {
+    console.log("я тут");
+    history.push("/");
+    setLoggedIn(false);
+    setCurrentUser([]);
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("search");
+    localStorage.removeItem("dataMovies");
+    localStorage.removeItem("searchSave");
+    localStorage.removeItem("checkingSave");
+    localStorage.removeItem("checking");
+ }
+
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
             <Route exact path="/">
-              <Header />
+              <Header loggedIn={loggedIn} />
               <Main />
               <Footer />
             </Route>
+            <Route path="/signup">
+              <Register
+              onAddUser={handleAddUser}
+              errorText={errorText}
+              />
+            </Route>
+            <Route path="/signin">
+              <Login
+              onAuthorizedUser={handleAuthorizedUser}
+              errorText={errorText}
+              />
+            </Route>
+            {loggedIn ?
             <Route path="/movies">
               <Header />
               <Main 
+              checkPreloader={checkPreloader}
               onMovieSearch={handleMovieSearchr}
               cardsData={currentCards}
               searchData={currentSearch}
@@ -196,6 +297,10 @@ function App() {
               />
               <Footer />
             </Route>
+            :
+            <Redirect to="./" />
+            }
+            {loggedIn ?
             <Route path="/saved-movies">
               <Header />
               <Main
@@ -206,19 +311,21 @@ function App() {
               />
               <Footer />
             </Route>
+            :
+            <Redirect to="./" />
+            }
+            {loggedIn ?
             <Route path="/profile">
               <Header />
-              <Main handleDataChangeUser={handleDataChangeUser} />
+              <Main
+              handleDataChangeUser={handleDataChangeUser}
+              errorText={errorText}
+              goBack={goBack}
+              />
             </Route>
-            <Route path="/signup">
-              <Register onAddUser={handleAddUser} />
-            </Route>
-            <Route path="/signin">
-              <Login onAuthorizedUser={handleAuthorizedUser} />
-            </Route>
-            <Route path="*">
-              <NotFound/>
-            </Route>
+            :
+            <Redirect to="./" />
+            }
         </Switch>
       </CurrentUserContext.Provider>
     </>

@@ -5,11 +5,25 @@ class MainApi {
         this._headers = data.headers;
     }
 
+    newNameAndEmail(name, email) {
+        return fetch(`${this._baseUrl}/users/me`, {
+          method: "PATCH",
+          headers: {
+            authorization: `Bearer ${localStorage.jwt}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+          }),
+        }).then(this._getResponseData);
+      }
+
     deleteMovie(idMovie) {
         return fetch(`${this._baseUrl}/movies/${idMovie}`, {
           method: "DELETE",
           headers: {
-            authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RhNzQzYmM1MWQ3OGE3MzIxMzg5ZWIiLCJpYXQiOjE2NzUyNjEwMTEsImV4cCI6MTY3NTg2NTgxMX0.N9pRBgnQxJA6XhnhlHZrMpv58F3OhvPecWk3YMIYGnc`,
+            authorization: `Bearer ${localStorage.jwt}`,
             "Content-Type": "application/json",
           },
         }).then(this._getResponseData);
@@ -18,7 +32,7 @@ class MainApi {
     initialDataProfile() {
         return fetch(`${this._baseUrl}/users/me`, {
             headers: {
-              authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RhNzQzYmM1MWQ3OGE3MzIxMzg5ZWIiLCJpYXQiOjE2NzUyNjEwMTEsImV4cCI6MTY3NTg2NTgxMX0.N9pRBgnQxJA6XhnhlHZrMpv58F3OhvPecWk3YMIYGnc`,
+              authorization: `Bearer ${localStorage.jwt}`,
               "Content-Type": "application/json",
             }
           }).then(this._getResponseData);
@@ -27,7 +41,7 @@ class MainApi {
     initialMovieData() {
         return fetch(`${this._baseUrl}/movies`, {
             headers: {
-              authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RhNzQzYmM1MWQ3OGE3MzIxMzg5ZWIiLCJpYXQiOjE2NzUyNjEwMTEsImV4cCI6MTY3NTg2NTgxMX0.N9pRBgnQxJA6XhnhlHZrMpv58F3OhvPecWk3YMIYGnc`,
+              authorization: `Bearer ${localStorage.jwt}`,
               "Content-Type": "application/json",
             }
           }).then(this._getResponseData);
@@ -37,7 +51,7 @@ class MainApi {
         return fetch(`${this._baseUrl}/movies`, {
           method: "POST",
           headers: {
-            authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RhNzQzYmM1MWQ3OGE3MzIxMzg5ZWIiLCJpYXQiOjE2NzUyNjEwMTEsImV4cCI6MTY3NTg2NTgxMX0.N9pRBgnQxJA6XhnhlHZrMpv58F3OhvPecWk3YMIYGnc`,
+            authorization: `Bearer ${localStorage.jwt}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({

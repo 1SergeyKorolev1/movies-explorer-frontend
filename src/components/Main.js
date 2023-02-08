@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import "./Main.css";
 import Promo from "./main/Promo.js";
 import AboutProject from "./main/AboutProject.js";
@@ -10,14 +10,69 @@ import Movies from './Movies.js';
 import SavedMovies from "./SavedMovies.js";
 import Profile from './Profile.js';
  
-function Main({ handleDataChangeUser, onMovieSearch, cardsData, searchData, onCardSave, cardsDataSave, onSaveMovieSearchr, searchSavedData, onCardDelete }) {
-  let cards = 6;
+function Main({
+  handleDataChangeUser,
+   onMovieSearch,
+    cardsData,
+     searchData,
+      onCardSave,
+       cardsDataSave,
+        onSaveMovieSearchr,
+         searchSavedData,
+          onCardDelete,
+           errorText,
+            goBack,
+            checkPreloader }) {
+  const [quantityCards, setQuantityCards] = React.useState(6);
+  let cards = quantityCards;
 
+  const [windowSize, setWindowSize] = React.useState({
+    width: undefined,
+    height: undefined,
+  });
+
+  window.onload = function() {
+    windowResize()
+ };
+
+  React.useEffect(() => {
+
+    function changeOfSize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+    
+    window.addEventListener('resize', changeOfSize);
+    
+    changeOfSize();
+    
+    return () => window.removeEventListener('resize', changeOfSize);
+    
+  }, [windowSize.width]);
+  
+  // console.log(3);
+
+  function windowResize() {
+    if (windowSize.width < 1168 && windowSize.width >659) {
+      setQuantityCards(quantityCards + 2);
+      cards += 2;
+    } else if (windowSize.width > 1168) {
+      setQuantityCards(quantityCards + 3);
+      cards += 3;
+    } else if (windowSize.width < 659) {
+      setQuantityCards(quantityCards + 1);
+      cards += 1;
+    }
+  }
+  
   function handleMoreClick() {
-    cards += 3;
+    windowResize()
+    // console.log(1);
     const arrayVisCards = Array.from(document.querySelector(".elements").children);
     const visCards = arrayVisCards.slice(0, cards);
-    // console.log(arrayVisCards.length);
+    // console.log(2);
 
     visCards.forEach(el => el.classList.add("visible"));
 
@@ -45,6 +100,7 @@ function Main({ handleDataChangeUser, onMovieSearch, cardsData, searchData, onCa
             handleMoreClick={handleMoreClick}
             cardsDataSave={cardsDataSave}
             onCardDelete={onCardDelete}
+            checkPreloader={checkPreloader}
             />
           </Route>
           <Route path="/saved-movies">
@@ -57,7 +113,7 @@ function Main({ handleDataChangeUser, onMovieSearch, cardsData, searchData, onCa
             />
           </Route>
           <Route path="/profile">
-            <Profile onDataChangeUser={handleDataChangeUser} />
+            <Profile onDataChangeUser={handleDataChangeUser} errorText={errorText} goBack={goBack} />
           </Route>
       </Switch>
     </main>

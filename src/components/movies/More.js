@@ -25,7 +25,7 @@ function More({ handleMoreClick, cardsData, cardsDataSave, searchData, searchSav
   
    const serchDataText = replaceSerchText();
 
-  if(cardsData !== undefined) {
+  if(cardsData !== null && cardsData !== undefined) {
     const cardsDataSearch = cardsData.filter(function (card) {
       let serchText = serchDataText.toLowerCase(); 
       let cardText = card.nameRU.toLowerCase();
@@ -33,7 +33,7 @@ function More({ handleMoreClick, cardsData, cardsDataSave, searchData, searchSav
       || cardText.includes(serchText)
       || cardText.includes(serchText.slice(1,3))
     });
-    console.log(cardsDataSearch.length);
+    // console.log(cardsDataSearch.length);
     if(cardsDataSearch.length > 6 || cardsDataSearch.length > 6 ) {
       return (
             <p className="more-title" onClick={handleMoreClick} >Еще</p>
@@ -51,7 +51,7 @@ function More({ handleMoreClick, cardsData, cardsDataSave, searchData, searchSav
         || cardText.includes(serchText.slice(1,3))
       }
     });
-    console.log(cardsDataSearch.length);
+    // console.log(cardsDataSearch.length);
     if(cardsDataSearch.length > 6 || cardsDataSearch.length > 6 ) {
       return (
             <p className="more-title" onClick={handleMoreClick} >Еще</p>

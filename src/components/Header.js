@@ -2,10 +2,10 @@ import React from "react";
 import "./Header.css"
 import HeaderWhite from "./header/HeaderWhite.js";
 import HeaderBlue from "./header/HeaderBlue.js";
-import { Route, Routes, useHistory, Switch, Link } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
  
-function Header() { 
+function Header({ loggedIn }) { 
 
   return (
       <Switch>
@@ -19,7 +19,11 @@ function Header() {
           <HeaderWhite />
         </Route>
         <Route path="/">
+          {loggedIn ?
+          <HeaderWhite />
+          :
           <HeaderBlue />
+          }
         </Route>
       </Switch>
   ); 

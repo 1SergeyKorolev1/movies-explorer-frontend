@@ -21,6 +21,11 @@
     transition: all 1s ease;
 }
 
+.login__image:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
 .login__welcome {
     font-family: "Inter";
     font-size: 24px;
@@ -68,19 +73,30 @@
     transition: all 0.5s ease;
 }
 
+.login__error {
+    margin: 0 0 10px;
+    font-family: "Inter-Regular";
+    line-height: 100%;
+    font-size: 10px;
+    color: #EE3465;
+}
+
 .login__button_invalid {
     opacity: 0.2;
-    border: 1px solid #000000;
-    background-color: #fff;
-    color: #000000;
-  }
-  .login__button_invalid:hover {
+}
+
+.login__button_valid {
+    opacity: 1;
+}
+
+.login__button_invalid:hover {
     opacity: 0.2;
     cursor: auto;
-  }
+}
 
-.login__button:hover {
-    opacity: 0.6;
+.login__button_valid:hover {
+   opacity: 0.6;
+   cursor: pointer;
 }
 
 .login__link-wrapper{

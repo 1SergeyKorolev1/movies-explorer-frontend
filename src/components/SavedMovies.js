@@ -10,15 +10,15 @@ function SavedMovies({ cardsDataSave, onSaveMovieSearchr, searchSavedData, handl
     const CheckboxSearch = document.getElementById('checkbox-search');
     console.log(CheckboxSearch.checked);
     if (CheckboxSearch.checked) {
-      localStorage.setItem('checking', JSON.stringify(CheckboxSearch.checked));
+      localStorage.setItem('checkingSave', JSON.stringify(CheckboxSearch.checked));
       window.location.reload();
     } else {
-      localStorage.setItem('checking', JSON.stringify(CheckboxSearch.checked));
+      localStorage.setItem('checkingSave', JSON.stringify(CheckboxSearch.checked));
       window.location.reload();
     }
   }
   
-  const checking = JSON.parse(localStorage.getItem('checking'));
+  const checking = JSON.parse(localStorage.getItem('checkingSave'));
 
   const check = true;
 

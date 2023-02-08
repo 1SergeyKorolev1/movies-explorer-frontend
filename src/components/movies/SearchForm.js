@@ -38,7 +38,7 @@ function SearchForm({ onMovieSearchr, handleCheckboxClick, searchData, searchSav
         return false;
        }
       } else {
-        console.log(cardsDataSaveSearch.length);
+        // console.log(cardsDataSaveSearch.length);
         if(cardsDataSaveSearch.length === 0) {
           return true;
         } else {
@@ -60,7 +60,7 @@ function SearchForm({ onMovieSearchr, handleCheckboxClick, searchData, searchSav
    const serchDataText = replaceSerchText();
 
    function arrayValidation() {
-     if(cardsData !== undefined) {
+     if(cardsData !== null && cardsData !== undefined) {
        const cardsDataSearch = cardsData.filter(function (card) {
          let serchText = serchDataText.toLowerCase(); 
          let cardText = card.nameRU.toLowerCase();
@@ -95,6 +95,7 @@ function SearchForm({ onMovieSearchr, handleCheckboxClick, searchData, searchSav
     if (location.pathname === '/movies') {
       return serchDataText === "" || serchDataText === " " ? "" : "Ничего не найдено";
     } else if(location.pathname === '/saved-movies') {
+      console.log(searchSavedDataText);
       return searchSavedDataText === "" || searchSavedDataText === " " ? "" : "Ничего не найдено";
     }
   }
@@ -127,6 +128,25 @@ function SearchForm({ onMovieSearchr, handleCheckboxClick, searchData, searchSav
 
   const searchText = onSearchText();
 
+  function checkpointCheck() {
+    if (location.pathname === '/movies') {
+      if(JSON.parse(localStorage.getItem('checking')) === true) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if (location.pathname === '/saved-movies') {
+      if(JSON.parse(localStorage.getItem('checkingSave')) === true) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  const checkpoint = checkpointCheck()
+
   return (
       <form onSubmit={handleSubmit} className="search">
         <div className="search__wrapper">
@@ -146,7 +166,7 @@ function SearchForm({ onMovieSearchr, handleCheckboxClick, searchData, searchSav
         </div>
         <div className="checkbox-container">
           <label className="checkbox-wrapper">
-              <input type="checkbox" class="invisible-checkbox" onClick={handleCheckboxClicking} id="checkbox-search" />
+              <input type="checkbox" class="invisible-checkbox" onClick={handleCheckboxClicking} id="checkbox-search" checked={checkpoint && true} />
               <span class="visible-checkbox">
                   <span className="visible-checkbox__radio"></span>
               </span>

@@ -4,7 +4,7 @@ import SearchForm from "./movies/SearchForm.js";
 import MoviesCardList from "./movies/MoviesCardList.js";
 import More from "./movies/More.js";
  
-function Movies({ onMovieSearch, cardsData, searchData, onCardSave, handleMoreClick, cardsDataSave, onCardDelete }) {
+function Movies({ onMovieSearch, cardsData, searchData, onCardSave, handleMoreClick, cardsDataSave, onCardDelete, checkPreloader }) {
   // const [checking, setChecking] = React.useState(undefined);
 
   // function handleCheckboxClick() {
@@ -50,6 +50,7 @@ function Movies({ onMovieSearch, cardsData, searchData, onCardSave, handleMoreCl
         onCardSave={onCardSave}
         cardsDataSave={cardsDataSave}
         onCardDelete={onCardDelete}
+        checkPreloader={checkPreloader}
         />
         <More
         handleMoreClick={handleMoreClick}

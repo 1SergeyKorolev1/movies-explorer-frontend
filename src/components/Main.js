@@ -23,6 +23,7 @@ function Main({
   errorText,
   goBack,
   checkPreloader,
+  notificationText,
 }) {
   const [quantityCards, setQuantityCards] = React.useState(6);
   let cards = quantityCards;
@@ -121,6 +122,7 @@ function Main({
             onDataChangeUser={handleDataChangeUser}
             errorText={errorText}
             goBack={goBack}
+            notificationText={notificationText}
           />
         </Route>
       </Switch>

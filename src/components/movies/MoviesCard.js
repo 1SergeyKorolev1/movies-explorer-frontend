@@ -27,13 +27,19 @@ function MoviesCard({
     chekButtonClass || onCheck === true ? "" : "сохранить"
   }`;
 
+  function getTimeFromMins(mins) {
+    let hours = Math.trunc(mins / 60);
+    let minutes = mins % 60;
+    return hours + "ч " + minutes + "мин";
+  }
+
   if (location.pathname === "/movies") {
     if (chekButtonClass) {
       return (
         <li className="element">
           <div className="element__group">
             <h2 className="element__title">{card.nameRU}</h2>
-            <p className="element__time">{card.duration} мин.</p>
+            <p className="element__time">{getTimeFromMins(card.duration)}</p>
           </div>
           <img
             className="element__img"
@@ -55,7 +61,7 @@ function MoviesCard({
         <li className="element">
           <div className="element__group">
             <h2 className="element__title">{card.nameRU}</h2>
-            <p className="element__time">{card.duration} мин.</p>
+            <p className="element__time">{getTimeFromMins(card.duration)}</p>
           </div>
           <img
             className="element__img"
@@ -78,7 +84,7 @@ function MoviesCard({
       <li className="element">
         <div className="element__group">
           <h2 className="element__title">{card.nameRU}</h2>
-          <p className="element__time">{card.duration} мин.</p>
+          <p className="element__time">{getTimeFromMins(card.duration)}</p>
         </div>
         <img
           className="element__img"

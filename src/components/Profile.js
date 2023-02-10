@@ -3,8 +3,9 @@ import "./Profile.css";
 import { useHistory } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import Error from "./error/Error.js";
+import Notification from "./notification/Notification.js";
 
-function Profile({ onDataChangeUser, errorText, goBack }) {
+function Profile({ onDataChangeUser, errorText, goBack, notificationText }) {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
 
@@ -30,10 +31,17 @@ function Profile({ onDataChangeUser, errorText, goBack }) {
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    onDataChangeUser({
-      email: email,
-      name: name,
-    });
+    if (email === "") {
+      onDataChangeUser({
+        email: currentUser.email,
+        name: name,
+      });
+    } else if (name === "") {
+      onDataChangeUser({
+        email: email,
+        name: currentUser.name,
+      });
+    }
   }
 
   function validateForm() {
@@ -41,13 +49,10 @@ function Profile({ onDataChangeUser, errorText, goBack }) {
     const submitButton = form.querySelector(".profile__button");
 
     if (
-      form.checkValidity() &&
-      name !== "" &&
-      name !== currentUser.name &&
-      email !== currentUser.email &&
-      email !== ""
+      (form.checkValidity() && name !== "" && name !== currentUser.name) ||
+      (email !== currentUser.email && email !== "")
     ) {
-      // console.log("nnn")
+      console.log("работает");
       submitButton.removeAttribute("disabled");
       submitButton.classList.add("profile__button_valid");
       submitButton.classList.remove("profile__button_invalid");
@@ -105,6 +110,7 @@ function Profile({ onDataChangeUser, errorText, goBack }) {
             />
           </div>
           <span className="profile__error" id="email-profile-error"></span>
+          <Notification notificationText={notificationText} />
           <Error errorText={errorText} />
           <button type="submit" className="profile__button">
             Редактировать

@@ -26,6 +26,7 @@ function App() {
   const [errorText, setErrorText] = React.useState("");
   const [loggedIn, setLoggedIn] = React.useState(true);
   const [checkPreloader, setCheckPreloader] = React.useState(false);
+  const [notificationText, setNotificationText] = React.useState("");
 
   const history = useHistory();
 
@@ -136,7 +137,7 @@ function App() {
         if (data.validation !== undefined) {
           setErrorText(data.validation.body.message);
         }
-        window.location.reload();
+        setNotificationText("Данные успешно изменены!");
       })
       .catch((err) => {
         console.log(err);
@@ -340,6 +341,7 @@ function App() {
               handleDataChangeUser={handleDataChangeUser}
               errorText={errorText}
               goBack={goBack}
+              notificationText={notificationText}
             />
           </Route>
           <Route path="*">

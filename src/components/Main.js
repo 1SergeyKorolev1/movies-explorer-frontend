@@ -1,28 +1,29 @@
 import React from "react";
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch } from "react-router-dom";
 import "./Main.css";
 import Promo from "./main/Promo.js";
 import AboutProject from "./main/AboutProject.js";
 import Techs from "./main/Techs.js";
 import AboutMe from "./main/AboutMe.js";
 import Portfoli from "./main/Portfolio.js";
-import Movies from './Movies.js';
+import Movies from "./Movies.js";
 import SavedMovies from "./SavedMovies.js";
-import Profile from './Profile.js';
- 
+import Profile from "./Profile.js";
+
 function Main({
   handleDataChangeUser,
-   onMovieSearch,
-    cardsData,
-     searchData,
-      onCardSave,
-       cardsDataSave,
-        onSaveMovieSearchr,
-         searchSavedData,
-          onCardDelete,
-           errorText,
-            goBack,
-            checkPreloader }) {
+  onMovieSearch,
+  cardsData,
+  searchData,
+  onCardSave,
+  cardsDataSave,
+  onSaveMovieSearchr,
+  searchSavedData,
+  onCardDelete,
+  errorText,
+  goBack,
+  checkPreloader,
+}) {
   const [quantityCards, setQuantityCards] = React.useState(6);
   let cards = quantityCards;
 
@@ -31,31 +32,29 @@ function Main({
     height: undefined,
   });
 
-  window.onload = function() {
-    windowResize()
- };
+  window.onload = function () {
+    windowResize();
+  };
 
   React.useEffect(() => {
-
     function changeOfSize() {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
       });
     }
-    
-    window.addEventListener('resize', changeOfSize);
-    
+
+    window.addEventListener("resize", changeOfSize);
+
     changeOfSize();
-    
-    return () => window.removeEventListener('resize', changeOfSize);
-    
+
+    return () => window.removeEventListener("resize", changeOfSize);
   }, [windowSize.width]);
-  
+
   // console.log(3);
 
   function windowResize() {
-    if (windowSize.width < 1168 && windowSize.width >659) {
+    if (windowSize.width < 1168 && windowSize.width > 659) {
       setQuantityCards(quantityCards + 2);
       cards += 2;
     } else if (windowSize.width > 1168) {
@@ -66,17 +65,22 @@ function Main({
       cards += 1;
     }
   }
-  
+
   function handleMoreClick() {
-    windowResize()
+    windowResize();
     // console.log(1);
-    const arrayVisCards = Array.from(document.querySelector(".elements").children);
+    const arrayVisCards = Array.from(
+      document.querySelector(".elements").children
+    );
     const visCards = arrayVisCards.slice(0, cards);
     // console.log(2);
 
-    visCards.forEach(el => el.classList.add("visible"));
+    visCards.forEach((el) => el.classList.add("visible"));
 
-    if(visCards.length === arrayVisCards.length || arrayVisCards.length === 0) {
+    if (
+      visCards.length === arrayVisCards.length ||
+      arrayVisCards.length === 0
+    ) {
       document.querySelector(".more-title").style.display = "none";
     }
   }
@@ -84,15 +88,15 @@ function Main({
   return (
     <main className="content">
       <Switch>
-          <Route exact path="/">
-            <Promo />
-            <AboutProject />
-            <Techs />
-            <AboutMe />
-            <Portfoli />
-          </Route>
-          <Route path="/movies">
-            <Movies 
+        <Route exact path="/">
+          <Promo />
+          <AboutProject />
+          <Techs />
+          <AboutMe />
+          <Portfoli />
+        </Route>
+        <Route path="/movies">
+          <Movies
             onMovieSearch={onMovieSearch}
             cardsData={cardsData}
             searchData={searchData}
@@ -101,23 +105,27 @@ function Main({
             cardsDataSave={cardsDataSave}
             onCardDelete={onCardDelete}
             checkPreloader={checkPreloader}
-            />
-          </Route>
-          <Route path="/saved-movies">
-            <SavedMovies
+          />
+        </Route>
+        <Route path="/saved-movies">
+          <SavedMovies
             cardsDataSave={cardsDataSave}
             onSaveMovieSearchr={onSaveMovieSearchr}
             searchSavedData={searchSavedData}
             handleMoreClick={handleMoreClick}
             onCardDelete={onCardDelete}
-            />
-          </Route>
-          <Route path="/profile">
-            <Profile onDataChangeUser={handleDataChangeUser} errorText={errorText} goBack={goBack} />
-          </Route>
+          />
+        </Route>
+        <Route path="/profile">
+          <Profile
+            onDataChangeUser={handleDataChangeUser}
+            errorText={errorText}
+            goBack={goBack}
+          />
+        </Route>
       </Switch>
     </main>
-  ); 
+  );
 }
 
-export default Main; 
+export default Main;
